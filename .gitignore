@@ -1,0 +1,52 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# =========================
+# PyCharm / IDEs
+# =========================
+.idea/
+*.iml
+
+# VS Code (por si acaso)
+.vscode/
+
+# =========================
+# OS / Editor noise
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Build / dist (por si se añade más adelante)
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Logs / temp
+# =========================
+*.log
+*.tmp
+
+# =========================
+# Assets temporales
+# =========================
+assets/_tmp/
