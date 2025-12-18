@@ -7,6 +7,8 @@ from src.world.camera import Camera
 from src.world.map import TileMap, CellContent
 from src.world.player import Player
 from src.render.renderer import Renderer
+from src.world.reveal import reveal_cross
+
 
 
 class Game:
@@ -29,10 +31,13 @@ class Game:
 
     def handle_events(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            found = self.tilemap.reveal(self.player.gx, self.player.gy)
-            if found == CellContent.TREASURE:
-                self.score += 100
-                self.tilemap.clear_content(self.player.gx, self.player.gy)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                gained = reveal_cross(
+                    self.tilemap,
+                    self.player.gx,
+                    self.player.gy,
+                )
+                self.score += gained
 
     def handle_input(self, now_ms: int) -> None:
         keys = pygame.key.get_pressed()
