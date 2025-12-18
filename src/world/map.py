@@ -35,10 +35,21 @@ class TileMap:
                 if x == 0 or y == 0 or x == w - 1 or y == h - 1:
                     tiles[y][x] = TileKind.WALL
 
-        for x in range(10, 30):
-            tiles[12][x] = TileKind.WALL
-        for y in range(20, 40):
-            tiles[y][25] = TileKind.WALL
+        # “bultos” internos para probar colisión/cámara
+        # (robusto a mapas pequeños, usado en tests)
+        if h > 13 and w > 11:
+            y_wall = min(12, h - 2)
+            x_start = min(10, w - 2)
+            x_end = min(30, w - 1)
+            for x in range(x_start, x_end):
+                tiles[y_wall][x] = TileKind.WALL
+
+        if w > 26 and h > 21:
+            x_wall = min(25, w - 2)
+            y_start = min(20, h - 2)
+            y_end = min(40, h - 1)
+            for y in range(y_start, y_end):
+                tiles[y][x_wall] = TileKind.WALL
 
         revealed = [[False for _ in range(w)] for _ in range(h)]
         contents: List[List[CellContent]] = [[CellContent.EMPTY for _ in range(w)] for _ in range(h)]
