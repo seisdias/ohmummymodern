@@ -26,7 +26,7 @@ class TileMap:
     contents: List[List[CellContent]]      # loot por casilla
 
     @classmethod
-    def demo(cls, w: int, h: int, seed: int = 1234) -> "TileMap":
+    def demo(cls, w: int, h: int, seed: int = 1234, treasure_chance: float = 0.08) -> "TileMap":
         rng = random.Random(seed)
 
         tiles = [[TileKind.FLOOR for _ in range(w)] for _ in range(h)]
@@ -59,7 +59,7 @@ class TileMap:
             for x in range(1, w - 1):
                 if tiles[y][x] == TileKind.FLOOR:
                     # 8% tesoro (ajustable)
-                    if rng.random() < 0.08:
+                    if rng.random() < treasure_chance:
                         contents[y][x] = CellContent.TREASURE
 
         return cls(w=w, h=h, tiles=tiles, revealed=revealed, contents=contents)

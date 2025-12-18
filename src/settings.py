@@ -11,5 +11,4 @@ class Settings:
     map_w_tiles: int = 80
     map_h_tiles: int = 60
 
-    # Movimiento por casillas: 1 tile por pulsación (step).
-    player_step_cooldown_ms: int = 120  # ajustaremos luego
+
