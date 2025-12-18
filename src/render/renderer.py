@@ -20,7 +20,8 @@ class Renderer:
         self.grid = grid
         self.font = pygame.font.Font(None, 28)
 
-    def draw_world(self, *, tilemap: TileMap, player: Player, camera: Camera, score: int, mummies: Sequence["Mummy"],) -> None:
+    def draw_world(self, *, tilemap: TileMap, player: Player, camera: Camera,
+                   score: int, mummies: Sequence["Mummy"],exit_pos: tuple[int, int], stage: int, difficulty: int) -> None:
         ts = self.grid.tile_size
         screen_rect = self.screen.get_rect()
 
@@ -49,6 +50,12 @@ class Renderer:
 
                 pygame.draw.rect(self.screen, (18, 18, 24), r, 1)
 
+        ex, ey = exit_pos
+        ewx, ewy = ex * ts, ey * ts
+        esx, esy = ewx - camera.x, ewy - camera.y
+        er = Rect(esx + 2, esy + 2, ts - 4, ts - 4)
+        pygame.draw.rect(self.screen, (80, 170, 80), er, 2)
+
         # Player
         pwx, pwy = player.gx * ts, player.gy * ts
         psx, psy = pwx - camera.x, pwy - camera.y
@@ -67,6 +74,10 @@ class Renderer:
         self.screen.blit(hud, (10, 10))
         hud2 = self.font.render(f"Lives: {player.lives}", True, (240, 240, 240))
         self.screen.blit(hud2, (10, 34))
+        hud_lvl = self.font.render(f"Stage: {stage}  Difficulty: {difficulty}", True, (240, 240, 240))
+        self.screen.blit(hud_lvl, (10, 58))
+
+
 
 
 
