@@ -8,7 +8,5 @@ class Settings:
     fps: int = 60
 
     tile_size: int = 32
-    map_w_tiles: int = 80
-    map_h_tiles: int = 60
 
 
