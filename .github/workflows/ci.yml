@@ -28,4 +28,4 @@ jobs:
 
       - name: Run tests with coverage (>=80%)
         run: |
-          pytest -q --cov=src/world --cov-report=term-missing --cov-fail-under=80
+          python -m pytest -q --cov=src/world --cov-report=term-missing --cov-fail-under=80
