@@ -32,7 +32,7 @@ def test_reveal_cross_scores_treasures_only_once():
     # Forzamos UN tesoro conocido en el centro
     m.contents[cy][cx] = CellContent.TREASURE
 
-    score1 = reveal_cross(m, cx, cy)
+    score1 = reveal_cross(m, cx, cy, treasure_score=100)
     score2 = reveal_cross(m, cx, cy)
 
     assert score1 == 100

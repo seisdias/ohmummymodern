@@ -2,6 +2,7 @@
 import pygame
 
 from src.settings import Settings
+from src.config import GameConfig
 from src.game import Game
 
 
@@ -10,10 +11,11 @@ def main() -> None:
     pygame.display.set_caption("Oh Mummy Modern")
 
     s = Settings()
+    cfg = GameConfig()
     screen = pygame.display.set_mode((s.screen_w, s.screen_h))
     clock = pygame.time.Clock()
 
-    game = Game(screen, s)
+    game = Game(screen, s, cfg)
 
     running = True
     while running:
@@ -29,7 +31,7 @@ def main() -> None:
             game.handle_events(event)
 
         game.handle_input(now_ms)
-        game.update()
+        game.update(now_ms)
         game.draw()
 
     pygame.quit()

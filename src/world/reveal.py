@@ -15,7 +15,7 @@ def cross_coords(cx: int, cy: int) -> Iterable[Coord]:
     yield cx, cy - 1
 
 
-def reveal_cross(tilemap: TileMap, cx: int, cy: int) -> int:
+def reveal_cross(tilemap: TileMap, cx: int, cy: int, treasure_score: int = 100) -> int:
     """
     Destapa una cruz centrada en (cx, cy).
     Devuelve los puntos obtenidos.
@@ -28,7 +28,7 @@ def reveal_cross(tilemap: TileMap, cx: int, cy: int) -> int:
 
         found = tilemap.reveal(gx, gy)
         if found == CellContent.TREASURE:
-            score += 100
+            score += treasure_score
             tilemap.clear_content(gx, gy)
 
     return score

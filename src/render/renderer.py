@@ -6,6 +6,12 @@ from src.world.camera import Camera
 from src.world.grid import Grid
 from src.world.map import TileMap, TileKind
 from src.world.player import Player
+from typing import Sequence, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.world.mummy import Mummy
+
+
 
 
 class Renderer:
@@ -14,7 +20,7 @@ class Renderer:
         self.grid = grid
         self.font = pygame.font.Font(None, 28)
 
-    def draw_world(self, *, tilemap: TileMap, player: Player, camera: Camera, score: int) -> None:
+    def draw_world(self, *, tilemap: TileMap, player: Player, camera: Camera, score: int, mummies: Sequence["Mummy"],) -> None:
         ts = self.grid.tile_size
         screen_rect = self.screen.get_rect()
 
@@ -49,6 +55,19 @@ class Renderer:
         pr = Rect(psx + 4, psy + 4, ts - 8, ts - 8)
         pygame.draw.rect(self.screen, (220, 220, 120), pr)
 
+        # Mummies
+        for m in mummies:
+            mwx, mwy = m.gx * ts, m.gy * ts
+            msx, msy = mwx - camera.x, mwy - camera.y
+            mr = Rect(msx + 6, msy + 6, ts - 12, ts - 12)
+            pygame.draw.rect(self.screen, (170, 80, 80), mr)
+
         # HUD
         hud = self.font.render(f"Score: {score}", True, (240, 240, 240))
         self.screen.blit(hud, (10, 10))
+        hud2 = self.font.render(f"Lives: {player.lives}", True, (240, 240, 240))
+        self.screen.blit(hud2, (10, 34))
+
+
+
+
