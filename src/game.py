@@ -4,9 +4,12 @@ import pygame
 from src.settings import Settings
 from src.world.grid import Grid
 from src.world.camera import Camera
-from src.world.map import TileMap
+from src.world.map import TileMap, CellContent
 from src.world.player import Player
 from src.render.renderer import Renderer
+from src.world.reveal import reveal_cross
+
+
 
 class Game:
     def __init__(self, screen: pygame.Surface, settings: Settings):
@@ -24,10 +27,20 @@ class Game:
         self.world_w_px = self.tilemap.w * self.s.tile_size
         self.world_h_px = self.tilemap.h * self.s.tile_size
 
+        self.score = 0
+
+    def handle_events(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                gained = reveal_cross(
+                    self.tilemap,
+                    self.player.gx,
+                    self.player.gy,
+                )
+                self.score += gained
+
     def handle_input(self, now_ms: int) -> None:
         keys = pygame.key.get_pressed()
-
-        # Movimiento por “step” (una casilla por cooldown)
         if now_ms - self.player.last_step_ms < self.s.player_step_cooldown_ms:
             return
 
@@ -46,7 +59,6 @@ class Game:
             self.player.last_step_ms = now_ms
 
     def update(self) -> None:
-        # Cámara sigue al jugador (en píxeles, centro del tile)
         ts = self.s.tile_size
         target_x = self.player.gx * ts + ts // 2
         target_y = self.player.gy * ts + ts // 2
@@ -61,5 +73,10 @@ class Game:
         )
 
     def draw(self) -> None:
-        self.renderer.draw_world(tilemap=self.tilemap, player=self.player, camera=self.camera)
+        self.renderer.draw_world(
+            tilemap=self.tilemap,
+            player=self.player,
+            camera=self.camera,
+            score=self.score,
+        )
         pygame.display.flip()
